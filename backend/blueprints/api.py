@@ -138,4 +138,12 @@ def get_all_transactions():
     transactions = list()
 
     for transaction in Transaction.query.all():
-        
+        transactions.append(transaction.to_dict())
+    
+    res = {
+        'msg': 'ok',
+        'transactions': transactions
+    }
+
+
+    return jsonify(res), 200
