@@ -3,14 +3,17 @@ from backend.extensions import db, migrate
 from backend.blueprints.api import api_bp
 from flask_cors import CORS
 
+
 def register_extensions(app):
     db.app = app
     db.init_app(app)
 
     migrate.init_app(app, db, render_as_batch=True)
 
+
 def register_blueprints(app):
     app.register_blueprint(api_bp)
+
 
 def create_app():
     app = Flask(
