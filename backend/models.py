@@ -9,7 +9,7 @@ class User(db.Model):
 
     username = db.Column(db.String(15), unique=True)
 
-    # payments = db.relationship('Payment', backref='user')
+    payments = db.relationship('Payment', backref='user')
 
     def __init__(self, username):
         self.username = username
@@ -21,42 +21,47 @@ class User(db.Model):
         }
 
 
-# class Payment(db.Model):
-#     __tablename__ = 'Payment'
-#     id = db.Column(db.Integer, primary_key=True)
+class Payment(db.Model):
+    __tablename__ = 'Payment'
+    id = db.Column(db.Integer, primary_key=True)
 
-#     # Many to One relationship:
-#     # Multiple payments exist, but each payment only refers to one User
-#     user_id = db.Column(db.Integer, db.ForeignKey('User.id'), nullable=False)
+    # Many to One relationship:
+    # Multiple payments exist, but each payment only refers to one User
+    user_id = db.Column(db.Integer, db.ForeignKey('User.id'), nullable=False)
 
-#     payment_id = db.Column(db.Integer, db.ForeignKey(
-#         'Payment.id'), nullable=False)
+    # Many to One relationship:
+    # Multiple payments exist, but each payment only belongs to one Transaction
+    transaction_id = db.Column(db.Integer, db.ForeignKey('Payment.id'), nullable=False)
 
-#     transaction = db.relationship('Transaction', backref='payment')
-#     amount = db.Column(db.Float)
+    # transaction = db.relationship('Transaction', backref='payment')
+    amount = db.Column(db.Float)
 
-#     def __init__(self, user_id, amount=0.0):
-#         self.user_id = user_id
-#         self.amount = amount
+    def __init__(self, user_id, transaction_id, amount=0.0):
+        self.user_id = user_id
+        self.transaction_id = transaction_id
+        self.amount = amount
 
-#     def to_dict(self):
-#         user = User.query.filter_by(id=self.user_id).first()
-#         return {
-#             'id': self.id,
-#             'username': user.username,
-#             'amount': self.amount
-#         }
+    def to_dict(self):
+        user = User.query.filter_by(id=self.user_id).first()
+        return {
+            'id': self.id,
+            'username': user.username,
+            'amount': self.amount
+        }
 
 
-# class Transaction(db.Model):
-#     __tablename__ = 'Transaction'
-#     id = db.Column(db.Integer, primary_key=True)
+class Transaction(db.Model):
+    __tablename__ = 'Transaction'
+    id = db.Column(db.Integer, primary_key=True)
 
-#     # One to many relationship:
-#     # For any single transaction, it can have many payments
-#     payments = db.relationship('Payment', backref='transaction')
+    # One to many relationship:
+    # For any single transaction, it can have many payments
+    payments = db.relationship('Payment', backref='transaction')
 
-#     time = db.Column(db.DateTime())
+    time = db.Column(db.DateTime())
 
-#     def __init__(self):
-#         self.time = datetime.now()
+    def __init__(self):
+        self.time = datetime.now()
+
+    def to_dict(self):
+        pass

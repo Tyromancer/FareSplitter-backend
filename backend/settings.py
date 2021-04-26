@@ -1,7 +1,6 @@
 # TODO: detect platform and change connection string prefix accordingly
 prefix = 'sqlite:///'
 
-
 class BaseConfig(object):
     DEBUG = True
 
