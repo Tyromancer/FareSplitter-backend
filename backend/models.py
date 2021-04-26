@@ -64,4 +64,14 @@ class Transaction(db.Model):
         self.time = datetime.now()
 
     def to_dict(self):
-        pass
+
+        payments = list()
+        for payment in Payment.query.filter_by(transaction_id=self.id).all():
+            payments.append(payment.to_dict())
+
+        res = {
+            'payments': payments,
+            'time': self.time
+        }
+
+        return jsonify(res), 200
