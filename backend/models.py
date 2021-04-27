@@ -1,3 +1,4 @@
+
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from backend.extensions import db
@@ -31,7 +32,8 @@ class Payment(db.Model):
 
     # Many to One relationship:
     # Multiple payments exist, but each payment only belongs to one Transaction
-    transaction_id = db.Column(db.Integer, db.ForeignKey('Payment.id'), nullable=False)
+    transaction_id = db.Column(
+        db.Integer, db.ForeignKey('Transaction.id'), nullable=False)
 
     # transaction = db.relationship('Transaction', backref='payment')
     amount = db.Column(db.Float)
@@ -60,8 +62,11 @@ class Transaction(db.Model):
 
     time = db.Column(db.DateTime())
 
-    def __init__(self):
+    desc = db.Column(db.String(20))
+
+    def __init__(self, description):
         self.time = datetime.now()
+        self.desc = description
 
     def to_dict(self):
 
@@ -71,7 +76,8 @@ class Transaction(db.Model):
 
         res = {
             'payments': payments,
-            'time': self.time
+            'time': self.time,
+            'desc': self.desc
         }
 
-        return jsonify(res), 200
+        return res

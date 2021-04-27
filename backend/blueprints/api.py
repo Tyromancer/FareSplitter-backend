@@ -72,7 +72,7 @@ def add_payment():
         }
 
         return jsonify(res), 400
-    
+
     payment = Payment(user.id, 0, amount=amount)
 
     db.session.add(payment)
@@ -85,6 +85,7 @@ def add_payment():
     return jsonify(res), 200
     pass
 
+
 @api_bp.route('/api/get-all-payments', methods=['GET'])
 def get_all_payments():
     # req = flask.request.get_json()
@@ -92,7 +93,7 @@ def get_all_payments():
     payments = list()
     for payment in Payment.query.all():
         payments.append(payment.to_dict())
-    
+
     res = {
         'payments': payments
     }
@@ -104,14 +105,14 @@ def get_all_payments():
 def add_transaction():
 
     req = flask.request.get_json()
+    description = req['description']
 
-    transaction = Transaction()
+    transaction = Transaction(description)
     db.session.add(transaction)
 
     for payment in req['payments']:
         username = payment['username']
         amount = payment['amount']
-
 
         user = User.query.filter_by(username=username).first()
 
@@ -121,10 +122,11 @@ def add_transaction():
             }
 
             return jsonify(res), 400
-        
-        payment = Payment(user_id=user.id, transaction_id=transaction_id, amount=amount)
+
+        payment = Payment(
+            user_id=user.id, transaction_id=transaction.id, amount=amount)
         db.session.add(payment)
-    
+
     db.session.commit()
 
     res = {
@@ -133,17 +135,40 @@ def add_transaction():
 
     return jsonify(res), 200
 
-@api_bp.route('/api/get-all-transactions', method=['GET', 'POST'])
+
+@api_bp.route('/api/get-all-transactions', methods=['GET', 'POST'])
 def get_all_transactions():
     transactions = list()
 
     for transaction in Transaction.query.all():
         transactions.append(transaction.to_dict())
-    
+
     res = {
         'msg': 'ok',
         'transactions': transactions
     }
 
+    return jsonify(res), 200
 
+
+@api_bp.route('/api/get-amounts-due', methods=['GET', 'POST'])
+def get_amount_due():
+    users = User.query.all()
+    amounts = list()
+
+    for user in users:
+        amount = 0.0
+        payments = Payment.query.filter_by(user_id=user.id).all()
+        for payment in payments:
+            amount += payment.amount
+
+        amounts.append({
+            'username': user.username,
+            'amount': amount
+        })
+
+    res = {
+        'msg': 'ok',
+        'amounts': amounts
+    }
     return jsonify(res), 200
