@@ -13,8 +13,6 @@ Code should mainly be “self-commenting” in that keeping code paths and then 
 
 3.All the code should be in the form of 4 indent spaces
 
-4.Add period at each end of the line
-
 ## How to submit issues
 All the contributors can submit their concerns directly to us through our discord server(https://discord.gg/QVmHWK7s). This includes any problem in function use, bugs, request for demo of the existing project and anything with coding styles.
 
