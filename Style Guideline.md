@@ -15,12 +15,6 @@ Code should mainly be “self-commenting” in that keeping code paths and then 
 
 4.Add period at each end of the line
 
-5.All the open and closed curly braces shouldn't be in the same column 
-Example: ![image](https://github.com/Amurozyh/image/blob/main/04283447660aa0db3ab76d275a85060.jpg)
-
-6.for 6, if the situation is the list of project, curly braces should be in the same column
-Example: ![image](https://github.com/Amurozyh/image/blob/main/a43262190e1372851bdd2164dcc000d.jpg)
-
 ## How to submit issues
 All the contributors can submit their concerns directly to us through our discord server(https://discord.gg/QVmHWK7s). This includes any problem in function use, bugs, request for demo of the existing project and anything with coding styles.
 
