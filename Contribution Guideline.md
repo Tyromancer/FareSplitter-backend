@@ -3,10 +3,6 @@
 ## Contributing Process
  FareSplitter is an open source software created on Github on our internal repository. We use Github to solve issues and accept pull requests.
 
-## Software Requirements
-
-TODO
-
 ## Pull Request
 
 Steps to pull request:

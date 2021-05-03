@@ -6,6 +6,13 @@ The main languages that undergo style critiques on code contributions such as TO
 
 Code should mainly be “self-commenting” in that keeping code paths and then commenting the functions as necessary. At a minimum, all functions should have comments that give a short description of function usage, parameter details and return details (giving expected types if it’s a dynamic language). All the newly added functions should be clear and easy to understand. Contributors are encouraged to write in the same style with the existing functions both front-end and back-end.
 
+## Code Style detail
+1.All the name of variables and functions should be connected by underscore for example: hello_world
+
+2.All the components used in page should be put under the path of src/component and all the page should be put under the path of src/view
+
+3.All the code should be in the form of 4 indent spaces
+
 ## How to submit issues
 All the contributors can submit their concerns directly to us through our discord server(https://discord.gg/QVmHWK7s). This includes any problem in function use, bugs, request for demo of the existing project and anything with coding styles.
 
